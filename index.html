@@ -1,4 +1,227 @@
+<!DOCTYPE html> 
+<html lang="pt-br"> 
+  <head> 
+    <meta charset="UTF-8" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+    <title>Flashcards de Mitos e Verdades</title> 
+    <style>
+      :root {
+        --primary: #4a90e2;
+        --success: #2ecc71;
+        --danger: #e74c3c;
+        --dark: #2c3e50;
+        --light: #f8f9fa;
+      }
 
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #eef2f3;
+        color: var(--dark);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
 
+      header {
+        background-color: var(--dark);
+        color: white;
+        text-align: center;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+
+      main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .card-container {
+        width: 350px;
+        height: 450px;
+        perspective: 1000px;
+        cursor: pointer;
+      }
+
+      .card {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.6s ease;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        border-radius: 15px;
+      }
+
+      .card.flipped {
+        transform: rotateY(180deg);
+      }
+
+      .card-face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 30px;
+        text-align: center;
+      }
+
+      .card-front {
+        background-color: white;
+        border: 3px solid var(--primary);
+      }
+
+      .card-back {
+        background-color: var(--light);
+        transform: rotateY(180deg);
+        border: 3px solid var(--dark);
+      }
+
+      .badge {
+        padding: 5px 15px;
+        border-radius: 20px;
+        color: white;
+        font-weight: bold;
+        margin-top: 20px;
+        text-transform: uppercase;
+      }
+
+      .badge.mito { background-color: var(--danger); }
+      .badge.verdade { background-color: var(--success); }
+
+      .controls {
+        margin-top: 30px;
+        display: flex;
+        gap: 15px;
+      }
+
+      button {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        background-color: var(--primary);
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      button:hover {
+        background-color: #357abd;
+      }
+
+      footer {
+        background-color: var(--dark);
+        color: #bdc3c7;
+        text-align: center;
+        padding: 15px;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head> 
+  <body> 
+    <header> 
+      <h1>Mitos e Verdades</h1>
+      <p>Clique no cartão para ver a resposta</p>
+    </header> 
+ 
+    <main> 
+      <div class="card-container" onclick="flipCard()">
+        <div class="card" id="flashcard">
+          <!-- Frente do Cartão -->
+          <div class="card-face card-front">
+            <h2 id="question-text">Carregando pergunta...</h2>
+          </div>
+          <!-- Verso do Cartão -->
+          <div class="card-face card-back">
+            <p id="answer-text">Carregando resposta...</p>
+            <span id="answer-badge" class="badge">Mito</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button onclick="nextCard()">Próximo Fato</button>
+      </div>
+    </main> 
+ 
+    <footer> 
+      <p>&copy; 2026 - Jogo de Flashcards Educativo</p>
+    </footer> 
+
+    <script>
+      // Banco de dados dos flashcards
+      const deck = [
+        {
+          question: "Chiclete grudado no estômago leva 7 anos para ser digerido?",
+          answer: "O estômago não consegue digerir a goma, mas ela passa direto pelo sistema digestivo em poucos dias.",
+          type: "mito"
+        },
+        {
+          question: "A Lua tem um lado que nunca recebe luz solar?",
+          answer: "Ambos os lados da Lua recebem luz solar. Nós só vemos o mesmo lado porque ela gira em sincronia com a Terra.",
+          type: "mito"
+        },
+        {
+          question: "Os tomates são biologicamente classificados como frutas?",
+          answer: "Eles se desenvolvem a partir do ovário de uma flor e contêm sementes, o que os torna frutos.",
+          type: "verdade"
+        }
+      ];
+
+      let currentIndex = 0;
+      const card = document.getElementById('flashcard');
+      const questionText = document.getElementById('question-text');
+      const answerText = document.getElementById('answer-text');
+      const answerBadge = document.getElementById('answer-badge');
+
+      // Função para virar o cartão
+      function flipCard() {
+        card.classList.toggle('flipped');
+      }
+
+      // Função para carregar os dados no cartão
+      function loadCard(index) {
+        questionText.textContent = deck[index].question;
+        answerText.textContent = deck[index].answer;
+        
+        // Atualiza a etiqueta (Mito ou Verdade)
+        answerBadge.textContent = deck[index].type;
+        answerBadge.className = `badge ${deck[index].type}`;
+      }
+
+      // Função para avançar para o próximo cartão
+      function nextCard() {
+        // Se estiver virado, desvira primeiro e espera a animação
+        if (card.classList.contains('flipped')) {
+          card.classList.remove('flipped');
+          setTimeout(() => {
+            currentIndex = (currentIndex + 1) % deck.length;
+            loadCard(currentIndex);
+          }, 300);
+        } else {
+          currentIndex = (currentIndex + 1) % deck.length;
+          loadCard(currentIndex);
+        }
+      }
+
+      // Inicializa o primeiro cartão ao carregar a página
+      loadCard(currentIndex);
+    </script>
+  </body> 
+</html>
 
