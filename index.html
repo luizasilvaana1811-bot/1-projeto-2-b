@@ -3,15 +3,16 @@
   <head> 
     <meta charset="UTF-8" /> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-    <title>Flashcards de Mitos e Verdades - Diário de uma Paixão</title> 
+    <title>Flashcards de Mitos e Verdades - Makeup Gringa</title> 
     <style>
       :root {
-        --romantic-navy: #af52dd;
-        --romantic-blue: #516bbe;
-        --romantic-pink: #e63946;
-        --success: #2ecc71;
-        --danger: #e74c3c;
-        --light-bg: #f1faee;
+        --coquette-pink: #ffb7b2;
+        --soft-rose: #ffdac1;
+        --bale-pink: #fff0f5;
+        --luxury-gold: #d4af37;
+        --dark-rose: #6b4247;
+        --success: #b5e2b9;
+        --danger: #ffb3ba;
       }
 
       * {
@@ -21,47 +22,69 @@
       }
 
       body {
-        font-family: 'Georgia', serif;
-        background-color: var(--light-bg);
-        color: var(--romantic-navy);
+        font-family: 'Playfair Display', 'Georgia', serif;
+        background-color: var(--bale-pink);
+        color: var(--dark-rose);
         display: flex;
         flex-direction: column;
         min-height: 100vh;
       }
 
       header {
-        background-color: var(--romantic-navy);
-        color: white;
+        background: linear-gradient(135deg, #ffe5ec, #ffc2d1);
         text-align: center;
-        padding: 25px 20px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        padding: 40px 20px;
+        box-shadow: 0 4px 15px rgba(224, 122, 146, 0.2);
+        border-bottom: 2px dashed #ffb7b2;
       }
 
       header h1 {
-        font-size: 1.8rem;
-        margin-bottom: 5px;
+        font-size: 2.2rem;
+        color: var(--dark-rose);
+        margin-bottom: 8px;
+        letter-spacing: 1px;
       }
 
       header p {
         font-style: italic;
-        color: var(--romantic-blue);
-        font-size: 1rem;
+        color: #9c666c;
+        font-size: 1.1rem;
       }
 
       main {
         flex: 1;
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
-        padding: 20px;
+        align-items: center;
+        padding: 40px 20px;
+      }
+
+      /* Container Flexbox para alinhar os cartões um ao lado do outro */
+      .deck-container {
+        display: flex;
+        gap: 20px;
+        overflow-x: auto;
+        padding: 20px 10px;
+        max-width: 100%;
+        scroll-behavior: smooth;
+        scrollbar-width: thin;
+      }
+
+      /* Customização da barra de rolagem */
+      .deck-container::-webkit-scrollbar {
+        height: 8px;
+      }
+      .deck-container::-webkit-scrollbar-thumb {
+        background-color: var(--coquette-pink);
+        border-radius: 10px;
       }
 
       .card-container {
-        width: 340px;
-        height: 520px;
+        width: 280px;
+        height: 440px;
         perspective: 1000px;
         cursor: pointer;
+        flex-shrink: 0; /* Impede que os cartões esmaguem */
       }
 
       .card {
@@ -69,9 +92,9 @@
         height: 100%;
         position: relative;
         transform-style: preserve-3d;
-        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-        border-radius: 15px;
+        transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 8px 20px rgba(224, 122, 146, 0.15);
+        border-radius: 20px;
       }
 
       .card.flipped {
@@ -83,204 +106,191 @@
         width: 100%;
         height: 100%;
         backface-visibility: hidden;
-        border-radius: 15px;
+        border-radius: 20px;
         display: flex;
         flex-direction: column;
-        padding: 25px;
+        padding: 20px;
         text-align: center;
         background-color: white;
-        border: 2px solid rgba(29, 53, 87, 0.1);
+        border: 2px solid #ffe5ec;
       }
 
       .card-front {
         justify-content: flex-start;
         align-items: center;
+        background: linear-gradient(to bottom, #ffffff, #fff5f7);
       }
 
       .card-image {
         width: 100%;
         height: 180px;
         object-fit: cover;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border-radius: 15px;
+        margin-bottom: 15px;
+        border: 1px solid #ffe5ec;
       }
 
       .card-front h2 {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
         line-height: 1.5;
-        font-weight: normal;
+        font-weight: 600;
+        color: var(--dark-rose);
         margin-top: auto;
         margin-bottom: auto;
       }
 
       .card-back {
-        background-color: #fffdf9;
+        background-color: #fffafb;
         transform: rotateY(180deg);
         justify-content: center;
         align-items: center;
+        border: 2px solid var(--coquette-pink);
       }
 
       .answer-text {
-        font-size: 1.1rem;
+        font-size: 1rem;
         line-height: 1.6;
-        margin-bottom: 25px;
+        margin-bottom: 20px;
+        color: #52363a;
       }
 
       .badge {
         display: inline-block;
         padding: 6px 20px;
         border-radius: 20px;
-        color: white;
+        color: var(--dark-rose);
         font-weight: bold;
         text-transform: uppercase;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         letter-spacing: 1px;
         font-family: sans-serif;
       }
 
-      .badge.mito { background-color: var(--danger); }
-      .badge.verdade { background-color: var(--success); }
-
-      .controls {
-        margin-top: 30px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
+      .badge.mito { 
+        background-color: var(--danger); 
+        box-shadow: 0 4px 10px rgba(255, 179, 186, 0.5);
+      }
+      .badge.verdade { 
+        background-color: var(--success); 
+        box-shadow: 0 4px 10px rgba(181, 226, 185, 0.5);
       }
 
-      button {
-        padding: 12px 35px;
-        border: none;
-        border-radius: 25px;
-        background-color: var(--romantic-navy);
-        color: white;
-        font-family: sans-serif;
-        font-weight: bold;
+      .tip {
+        text-align: center;
         font-size: 0.9rem;
-        cursor: pointer;
-        transition: transform 0.2s, background-color 0.2s;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      }
-
-      button:hover {
-        background-color: #2a476c;
-        transform: translateY(-2px);
-      }
-
-      .progress {
-        font-family: sans-serif;
-        font-size: 0.85rem;
-        color: var(--romantic-navy);
-        opacity: 0.8;
+        color: #9c666c;
+        margin-top: -10px;
+        margin-bottom: 20px;
+        font-style: italic;
       }
 
       footer {
-        background-color: var(--romantic-navy);
-        color: #a8dadc;
+        background-color: #ffc2d1;
+        color: var(--dark-rose);
         text-align: center;
-        padding: 15px;
-        font-size: 0.85rem;
-        font-family: sans-serif;
+        padding: 20px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        border-top: 2px dashed #ffb7b2;
       }
     </style>
   </head> 
   <body> 
     <header> 
-      <h1>Diário de uma Paixão</h1>
-      <p>Descubra os Mitos e Verdades por trás dos bastidores</p>
+      <h1>Mitos e Verdades da Maquiagem Gringa</h1>
+      <p>O universo das marcas virais mais desejadas da Sephora</p>
     </header> 
  
-    <main> 
-      <div class="card-container" onclick="flipCard()">
-        <div class="card" id="flashcard">
-          <!-- Frente do Cartão -->
-          <div class="card-face card-front">
-            <img id="card-img" class="card-image" src="" alt="Cena do filme">
-            <h2 id="question-text">Carregando...</h2>
-          </div>
-          <!-- Verso do Cartão -->
-          <div class="card-face card-back">
-            <p id="answer-text">Carregando...</p>
-            <span id="answer-badge" class="badge">Mito</span>
+    <main style="flex-direction: column;"> 
+      <p class="tip">Arraste para o lado para ver todos os cartões 🎀</p>
+      
+      <div class="deck-container">
+        
+        <!-- CARD 1 - RARE BEAUTY -->
+        <div class="card-container" onclick="flipCard(this)">
+          <div class="card">
+            <div class="card-face card-front">
+              <img class="card-image" src="https://unsplash.com" alt="Rare Beauty Blush">
+              <h2>O blush líquido da Rare Beauty foi feito super pigmentado por um erro de fábrica?</h2>
+            </div>
+            <div class="card-face card-back">
+              <p class="answer-text">Mito! A altíssima pigmentação foi proposital. Selena Gomez queria uma fórmula inclusiva que aparecesse perfeitamente em todos os tons de pele com apenas uma gota.</p>
+              <span class="badge mito">Mito</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="controls">
-        <button onclick="nextCard()">Próximo Cartão</button>
-        <div class="progress" id="card-progress">1 de 6</div>
+        <!-- CARD 2 - DIOR -->
+        <div class="card-container" onclick="flipCard(this)">
+          <div class="card">
+            <div class="card-face card-front">
+              <img class="card-image" src="https://unsplash.com" alt="Dior Lip Oil">
+              <h2>O famoso Lip Glow Oil da Dior reage com o pH dos lábios para mudar de cor?</h2>
+            </div>
+            <div class="card-face card-back">
+              <p class="answer-text">Verdade! Ele possui a tecnologia "Color Reviver", que reage diretamente com a umidade e o nível de pH da sua boca para criar um tom rosado exclusivo e personalizado.</p>
+              <span class="badge verdade">Verdade</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 3 - SOL DE JANEIRO -->
+        <div class="card-container" onclick="flipCard(this)">
+          <div class="card">
+            <div class="card-face card-front">
+              <img class="card-image" src="https://unsplash.com" alt="Sol de Janeiro Cream">
+              <h2>A marca gringa super viral 'Sol de Janeiro' é originalmente fabricada no Brasil?</h2>
+            </div>
+            <div class="card-face card-back">
+              <p class="answer-text">Mito! Apesar de celebrar a estética e os ingredientes das praias brasileiras, a marca foi fundada nos Estados Unidos por uma americana e os produtos são desenvolvidos lá fora.</p>
+              <span class="badge mito">Mito</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 4 - CHARLOTTE TILBURY -->
+        <div class="card-container" onclick="flipCard(this)">
+          <div class="card">
+            <div class="card-face card-front">
+              <img class="card-image" src="https://unsplash.com" alt="Hollywood Flawless Filter">
+              <h2>O Hollywood Flawless Filter da Charlotte Tilbury é uma base de alta cobertura?</h2>
+            </div>
+            <div class="card-face card-back">
+              <p class="answer-text">Mito! Ele não é uma base. Trata-se de um primer iluminador multifuncional híbrido, feito para dar viço de "filtro do Instagram" por baixo da maquiagem ou nos pontos altos do rosto.</p>
+              <span class="badge mito">Mito</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 5 - RHODE -->
+        <div class="card-container" onclick="flipCard(this)">
+          <div class="card">
+            <div class="card-face card-front">
+              <img class="card-image" src="https://unsplash.com" alt="Rhode Peptide Lip Treatment">
+              <h2>O protetor labial de peptídeos da Rhode, marca da Hailey Bieber, esgota em minutos?</h2>
+            </div>
+            <div class="card-face card-back">
+              <p class="answer-text">Verdade! Devido ao estrondoso sucesso e estratégias de marketing focadas no visual 'glazed skin' da Hailey, os estoques esgotam rapidamente e geram filas de espera imensas mundiais.</p>
+              <span class="badge verdade">Verdade</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 6 - GLOSSIER -->
+        <div class="card-container" onclick="flipCard(this)">
+          <div class="card">
+            <div class="card-face card-front">
+              <img class="card-image" src="https://unsplash.com" alt="Glossier Aesthetic">
+              <h2>A Glossier foi uma das marcas pioneiras a focar no conceito de 'maquiagem sem maquiagem'?</h2>
+            </div>
+            <div class="card-face card-back">
+              <p class="answer-text">Verdade! Lançada com o lema "Skin first, makeup second", a marca revolucionou a maquiagem gringa ao priorizar a pele natural e iluminada antes da explosão do visual Clean Girl.</p>
+              <span class="badge verdade">Verdade</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </main> 
  
     <footer> 
-      <p>Clique no cartão para revelar a resposta verdadeira.</p>
-    </footer> 
-
-    <script>
-      // Banco de dados com 6 flashcards contendo as imagens reais mapeadas
-      const deck = [
-        {
-          question: "Ryan Gosling e Rachel McAdams não se davam bem no início e quase quebraram o set com brigas?",
-          answer: "Verdade! O diretor Nick Cassavetes revelou que Ryan chegou a pedir para trocar de atriz porque não conseguia olhar para ela. Mais tarde, eles se apaixonaram e namoraram por anos.",
-          type: "verdade",
-          image: "https://unsplash.com" // Fallback elegante / Alusão ao tom romântico
-        },
-        {
-          question: "A clássica cena da chuva foi gravada sob uma tempestade real que atingiu a Carolina do Sul?",
-          answer: "Mito! A chuva torrencial foi totalmente artificial, criada por imensas mangueiras de estúdio. O maior desafio dos atores foi manter os olhos abertos sob a forte pressão da água.",
-          type: "mito",
-          image: "https://unsplash.com" // Representação chuva clássica
-        },
-        {
-          question: "Ryan Gosling construiu de verdade a mesa de jantar que aparece na casa reformada do filme?",
-          answer: "Verdade! Para fazer laboratório para o papel de Noah, o ator morou em Charleston por dois meses e fabricou de forma artesanal vários móveis cenográficos.",
-          type: "verdade",
-          image: "https://unsplash.com" // Marcenaria/Estilo rústico
-        },
-        {
-          question: "Os milhares de pássaros na famosa cena do lago eram todos computação gráfica (CGI)?",
-          answer: "Mito! O estúdio queria usar CGI, mas o diretor comprou filhotes de gansos reais e os criou em um lago próximo para que estivessem acostumados com o barco no dia da filmagem.",
-          type: "mito",
-          image: "https://unsplash.com" // Aves aquáticas / Lago
-        },
-        {
-          question: "O filme foi gravado de trás para frente devido às mudanças físicas exigidas de Ryan Gosling?",
-          answer: "Verdade! As cenas do Noah mais velho foram gravadas primeiro. Ryan teve que perder mais de 9 kg e raspar a barba comprida durante o recesso para rodar o Noah jovem no início do namoro.",
-          type: "verdade",
-          image: "https://unsplash.com" // Cinema/Linha do tempo
-        },
-        {
-          question: "Nicholas Sparks escreveu o livro baseado na história de amor de seus próprios pais?",
-          answer: "Mito! A comovente obra foi inspirada na história dos avós da ex-esposa do autor, que já estavam casados há mais de 60 anos quando ele os conheceu.",
-          type: "mito",
-          image: "https://unsplash.com" // Cartas e Diários antigos
-        }
-      ];
-
-      // Substituição dos caminhos pelos links exatos de imagens extraídos para máxima fidelidade
-      deck[0].image = "https://youtube.com"; // Link para cena romântica Noah/Allie
-      deck[1].image = "https://rottentomatoes.com"; // Beijo na chuva icônico
-      deck[2].image = "https://youtube.com"; // Noah e Allie na estrada / Casa
-      deck[3].image = "https://study.com"; // Gansos/Cisnes reais do lago
-      deck[4].image = "https://pinterest.com"; // Dança noturna e mudanças de cena
-      deck[5].image = "https://espm.br"; // Riso e romance do casal
-
-      let currentIndex = 0;
-      const card = document.getElementById('flashcard');
-      const cardImg = document.getElementById('card-img');
-      const questionText = document.getElementById('question-text');
-      const answerText = document.getElementById('answer-text');
-      const answerBadge = document.getElementById('answer-badge');
-      const progressText = document.getElementById('card-progress');
-
-      function flipCard() {
-        card.classList.toggle('flipped');
-      }
-
-      function loadCard(index) {
-        // Correção de exibição: Se o link não for imagem direta, usamos imagens ilustrativas seguras otimizadas para a renderização do browser
-        const backupImages = [
-          "https://unsplash.com", // Brigas / Bastidores
-          "https://unsplash.com", // Chuva
