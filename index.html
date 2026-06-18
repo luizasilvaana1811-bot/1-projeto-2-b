@@ -1,4 +1,4 @@
-<<!DOCTYPE html> 
+<!DOCTYPE html> 
 <html lang="pt-br"> 
   <head> 
     <meta charset="UTF-8" /> 
@@ -12,7 +12,6 @@
         --cor-texto: #4a3b32;
         --cor-card-frente: #ffffff;
         --cor-card-verso: #ffe5ec;
-        --cor-detalhe: #d4af37;
       }
 
       body {
@@ -32,13 +31,13 @@
         background-color: var(--cor-primaria);
         width: 100%;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        box-sizing: border-box;
       }
 
       header h1 {
         margin: 0;
         font-size: 1.8rem;
         color: #fff;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
       }
 
       header p {
@@ -60,11 +59,11 @@
         justify-content: center;
       }
 
-      /* Estrutura do Flashcard */
+      /* Estrutura do Flashcard com Perspectiva */
       .flashcard-container {
         background-color: transparent;
-        height: 300px;
-        perspective: 1000px;
+        height: 320px;
+        perspective: 1000px; /* Cria o efeito 3D de profundidade */
         cursor: pointer;
       }
 
@@ -73,13 +72,13 @@
         width: 100%;
         height: 100%;
         text-align: center;
-        transition: transform 0.6s;
-        transform-style: preserve-3d;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-style: preserve-3d; /* Mantém os lados em 3D */
         border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.06);
       }
 
-      /* Classe aplicada via JavaScript para virar o card */
+      /* Classe que faz o card girar */
       .flashcard.virado {
         transform: rotateY(180deg);
       }
@@ -88,18 +87,19 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        -webkit-backface-visibility: hidden;
+        -webkit-backface-visibility: hidden; /* Esconde o verso enquanto gira */
         backface-visibility: hidden;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 20px;
+        padding: 25px;
         box-sizing: border-box;
         border-radius: 15px;
         border: 2px solid var(--cor-secundaria);
       }
 
+      /* Estilo da Frente */
       .frente {
         background-color: var(--cor-card-frente);
         color: var(--cor-texto);
@@ -111,32 +111,36 @@
         letter-spacing: 2px;
         color: #b5838d;
         font-weight: bold;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
       }
 
       .frente h2 {
-        font-size: 1.3rem;
+        font-size: 1.25rem;
         margin: 0 0 15px 0;
+        line-height: 1.4;
       }
 
       .frente .instrucao {
         font-size: 0.75rem;
         color: #a2a2a2;
         position: absolute;
-        bottom: 15px;
+        bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
       }
 
+      /* Estilo do Verso */
       .verso {
         background-color: var(--cor-card-verso);
         color: var(--cor-texto);
-        transform: rotateY(180deg);
+        transform: rotateY(180deg); /* Começa invertido */
       }
 
       .verso .status {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         font-weight: bold;
         text-transform: uppercase;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
         letter-spacing: 1px;
       }
 
@@ -149,8 +153,8 @@
       }
 
       .verso p {
-        font-size: 1rem;
-        line-height: 1.5;
+        font-size: 0.95rem;
+        line-height: 1.6;
         margin: 0;
       }
 
@@ -163,12 +167,12 @@
         box-sizing: border-box;
         font-size: 0.85rem;
       }
-    </style>
+    </style> 
   </head> 
   <body> 
     <header> 
       <h1>Mitos e Verdades da Maquiagem Gringa</h1>
-      <p>Clique nos cards para revelar o segredo por trás dos produtos mais famosos!</p>
+      <p>Toque ou clique nos cards para descobrir os segredos!</p>
     </header> 
  
     <main> 
@@ -182,7 +186,7 @@
           </div>
           <div class="face verso">
             <span class="status verdade">Verdade!</span>
-            <p>Esse blush possui uma pigmentação extremamente alta. Apenas uma gotinha minúscula (um pontinho) é suficiente para as duas bochechas. Se exagerar, ele mancha!</p>
+            <p>Esse blush possui pigmentação extrema. Apenas uma gotinha minúscula é suficiente para as duas bochechas. Se colocar mais do que isso, ele mancha a pele.</p>
           </div>
         </div>
       </div>
@@ -197,7 +201,7 @@
           </div>
           <div class="face verso">
             <span class="status mito">Mito!</span>
-            <p>A Fenty Beauty revolucionou o mercado por ser inclusiva para todos. O foco inicial foi trazer tons profundos que faltavam no mercado, mas a linha atende mais de 50 tons de pele, das mais claras às mais retintas.</p>
+            <p>A marca revolucionou por incluir todos. O foco foi trazer os tons profundos que faltavam no mercado, mas a linha atende mais de 50 cores diferentes, do claríssimo ao retinto.</p>
           </div>
         </div>
       </div>
@@ -207,12 +211,12 @@
         <div class="flashcard">
           <div class="face frente">
             <span class="marca">Charlotte Tilbury</span>
-            <h2>O pó Flawless Finish serve apenas para matificar e tira todo o viço natural?</h2>
+            <h2>O pó Flawless Finish serve apenas para matificar e tira o viço natural?</h2>
             <span class="instrucao">Clique para descobrir</span>
           </div>
           <div class="face verso">
             <span class="status mito">Mito!</span>
-            <p>Ele é famoso justamente por ser ultra-fino e criar um efeito de "filtro de desfoque" (blur) sem pesar. Ele sela a maquiagem mas mantém uma textura acetinada, sem aspecto seco de pó tradicional.</p>
+            <p>Ele é famoso por ser ultra-fino e criar um efeito óptico de "desfoque" (blur). Ele sela os produtos cremosos mantendo uma textura acetinada sem ressecar o visual.</p>
           </div>
         </div>
       </div>
@@ -227,7 +231,7 @@
           </div>
           <div class="face verso">
             <span class="status mito">Mito!</span>
-            <p>Nenhum creme elimina celulite sozinho. O extrato de Guaraná presente nele ajuda a estimular a circulação local e dá firmeza temporária à pele (efeito visual de pele mais lisa), além de uma hidratação potente.</p>
+            <p>Nenhum creme reconstrói a pele sozinho. O extrato de Guaraná ajuda a ativar a microcirculação temporariamente, dando um efeito visual de pele mais firme e muito perfumada.</p>
           </div>
         </div>
       </div>
@@ -238,11 +242,12 @@
     </footer> 
 
     <script>
-      function virarCard(container) {
-        // Encontra o elemento .flashcard dentro do container que recebeu o clique
-        const card = container.querySelector('.flashcard');
-        // Alterna a classe 'virado' para aplicar a animação CSS
-        card.classList.toggle('virado');
+      function virarCard(elementoContainer) {
+        // Busca a div interna .flashcard correspondente ao container clicado
+        const card Interno = elementoContainer.querySelector('.flashcard');
+        
+        // Ativa ou desativa a classe 'virado' que faz o CSS girar em 180 graus
+        cardInterno.classList.toggle('virado');
       }
     </script>
   </body> 
