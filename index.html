@@ -3,14 +3,15 @@
   <head> 
     <meta charset="UTF-8" /> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-    <title>Flashcards de Mitos e Verdades</title> 
+    <title>Flashcards de Mitos e Verdades - Diário de uma Paixão</title> 
     <style>
       :root {
-        --primary: #4a90e2;
+        --romantic-pink: #d4a373;
+        --romantic-blue: #a8dadc;
+        --navy: #1d3557;
         --success: #2ecc71;
         --danger: #e74c3c;
-        --dark: #2c3e50;
-        --light: #f8f9fa;
+        --light-bg: #f1faee;
       }
 
       * {
@@ -20,20 +21,30 @@
       }
 
       body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #eef2f3;
-        color: var(--dark);
+        font-family: 'Georgia', serif;
+        background-color: var(--light-bg);
+        color: var(--navy);
         display: flex;
         flex-direction: column;
         min-height: 100vh;
       }
 
       header {
-        background-color: var(--dark);
+        background-color: var(--navy);
         color: white;
         text-align: center;
-        padding: 20px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        padding: 30px 20px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      }
+
+      header h1 {
+        font-size: 2rem;
+        margin-bottom: 5px;
+      }
+
+      header p {
+        font-style: italic;
+        color: var(--romantic-blue);
       }
 
       main {
@@ -46,8 +57,8 @@
       }
 
       .card-container {
-        width: 350px;
-        height: 450px;
+        width: 340px;
+        height: 460px;
         perspective: 1000px;
         cursor: pointer;
       }
@@ -57,9 +68,9 @@
         height: 100%;
         position: relative;
         transform-style: preserve-3d;
-        transition: transform 0.6s ease;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-        border-radius: 15px;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        border-radius: 12px;
       }
 
       .card.flipped {
@@ -71,72 +82,104 @@
         width: 100%;
         height: 100%;
         backface-visibility: hidden;
-        border-radius: 15px;
+        border-radius: 12px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 30px;
+        padding: 35px;
         text-align: center;
+        border: 2px solid rgba(29, 53, 87, 0.1);
       }
 
       .card-front {
         background-color: white;
-        border: 3px solid var(--primary);
+        background-image: radial-gradient(var(--romantic-blue) 0.5px, transparent 0.5px), radial-gradient(var(--romantic-blue) 0.5px, #ffffff 0.5px);
+        background-size: 20px 20px;
+        background-position: 0 0, 10px 10px;
+      }
+
+      .card-front h2 {
+        font-size: 1.35rem;
+        line-height: 1.5;
+        font-weight: normal;
       }
 
       .card-back {
-        background-color: var(--light);
+        background-color: #fffdf9;
         transform: rotateY(180deg);
-        border: 3px solid var(--dark);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .answer-content {
+        margin-auto: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+      }
+
+      .answer-content p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
       }
 
       .badge {
-        padding: 5px 15px;
+        display: inline-block;
+        padding: 6px 20px;
         border-radius: 20px;
         color: white;
         font-weight: bold;
-        margin-top: 20px;
         text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        font-family: sans-serif;
+        align-self: center;
       }
 
       .badge.mito { background-color: var(--danger); }
       .badge.verdade { background-color: var(--success); }
 
       .controls {
-        margin-top: 30px;
-        display: flex;
-        gap: 15px;
+        margin-top: 35px;
       }
 
       button {
-        padding: 12px 24px;
+        padding: 12px 30px;
         border: none;
-        border-radius: 8px;
-        background-color: var(--primary);
+        border-radius: 25px;
+        background-color: var(--navy);
         color: white;
+        font-family: sans-serif;
         font-weight: bold;
+        font-size: 0.9rem;
         cursor: pointer;
-        transition: background 0.2s;
+        transition: transform 0.2s, background-color 0.2s;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
       }
 
       button:hover {
-        background-color: #357abd;
+        background-color: #2a476c;
+        transform: translateY(-2px);
       }
 
       footer {
-        background-color: var(--dark);
-        color: #bdc3c7;
+        background-color: var(--navy);
+        color: #a8dadc;
         text-align: center;
-        padding: 15px;
-        font-size: 0.9rem;
+        padding: 20px;
+        font-size: 0.85rem;
+        font-family: sans-serif;
       }
     </style>
   </head> 
   <body> 
     <header> 
-      <h1>Mitos e Verdades</h1>
-      <p>Clique no cartão para ver a resposta</p>
+      <h1>Diário de uma Paixão</h1>
+      <p>Mitos e Verdades sobre a obra de Nicholas Sparks</p>
     </header> 
  
     <main> 
@@ -148,37 +191,44 @@
           </div>
           <!-- Verso do Cartão -->
           <div class="card-face card-back">
-            <p id="answer-text">Carregando resposta...</p>
-            <span id="answer-badge" class="badge">Mito</span>
+            <div class="answer-content">
+              <p id="answer-text">Carregando resposta...</p>
+              <span id="answer-badge" class="badge">Mito</span>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="controls">
-        <button onclick="nextCard()">Próximo Fato</button>
+        <button onclick="nextCard()">Próxima Curiosidade</button>
       </div>
     </main> 
  
     <footer> 
-      <p>&copy; 2026 - Jogo de Flashcards Educativo</p>
+      <p>Feito para fãs de Noah e Allie. Clique no cartão para virar.</p>
     </footer> 
 
     <script>
-      // Banco de dados dos flashcards
+      // Perguntas baseadas em fatos reais de bastidores e do livro
       const deck = [
         {
-          question: "Chiclete grudado no estômago leva 7 anos para ser digerido?",
-          answer: "O estômago não consegue digerir a goma, mas ela passa direto pelo sistema digestivo em poucos dias.",
+          question: "Ryan Gosling e Rachel McAdams (Noah e Allie) não se davam bem no início das filmagens?",
+          answer: "Eles brigavam tanto que Ryan chegou a pedir ao diretor para substituir Rachel no set. Depois, eles se apaixonaram e namoraram na vida real.",
+          type: "verdade"
+        },
+        {
+          question: "A história do livro é totalmente fictícia e inventada por Nicholas Sparks?",
+          answer: "O livro foi inspirado na história real dos avós da ex-esposa do autor, que ficaram casados por mais de 60 anos.",
           type: "mito"
         },
         {
-          question: "A Lua tem um lado que nunca recebe luz solar?",
-          answer: "Ambos os lados da Lua recebem luz solar. Nós só vemos o mesmo lado porque ela gira em sincronia com a Terra.",
-          type: "mito"
+          question: "Ryan Gosling construiu a mesa da cozinha do filme com as próprias mãos?",
+          answer: "Para entrar no personagem, Ryan morou em Charleston antes das filmagens e fabricou artesanalmente os móveis usados no cenário.",
+          type: "verdade"
         },
         {
-          question: "Os tomates são biologicamente classificados como frutas?",
-          answer: "Eles se desenvolvem a partir do ovário de uma flor e contêm sementes, o que os torna frutos.",
+          question: "O filme foi gravado exatamente na mesma ordem cronológica dos acontecimentos?",
+          answer: "Eles gravaram o final primeiro (com Noah idoso). Ryan Gosling teve que perder muito peso e raspar a barba para gravar as cenas do Noah jovem depois.",
           type: "verdade"
         }
       ];
@@ -189,24 +239,19 @@
       const answerText = document.getElementById('answer-text');
       const answerBadge = document.getElementById('answer-badge');
 
-      // Função para virar o cartão
       function flipCard() {
         card.classList.toggle('flipped');
       }
 
-      // Função para carregar os dados no cartão
       function loadCard(index) {
         questionText.textContent = deck[index].question;
         answerText.textContent = deck[index].answer;
         
-        // Atualiza a etiqueta (Mito ou Verdade)
         answerBadge.textContent = deck[index].type;
         answerBadge.className = `badge ${deck[index].type}`;
       }
 
-      // Função para avançar para o próximo cartão
       function nextCard() {
-        // Se estiver virado, desvira primeiro e espera a animação
         if (card.classList.contains('flipped')) {
           card.classList.remove('flipped');
           setTimeout(() => {
@@ -219,7 +264,7 @@
         }
       }
 
-      // Inicializa o primeiro cartão ao carregar a página
+      // Inicialização
       loadCard(currentIndex);
     </script>
   </body> 
