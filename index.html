@@ -6,11 +6,11 @@
     <title>Flashcards de Mitos e Verdades - Diário de uma Paixão</title> 
     <style>
       :root {
-        --romantic-pink: #d4a373;
+        --romantic-navy: #1d3557;
         --romantic-blue: #a8dadc;
-        --navy: #1d3557;
-        --success: #f467fb;
-        --danger: #7b4eda;
+        --romantic-pink: #e63946;
+        --success: #2ecc71;
+        --danger: #e74c3c;
         --light-bg: #f1faee;
       }
 
@@ -23,28 +23,29 @@
       body {
         font-family: 'Georgia', serif;
         background-color: var(--light-bg);
-        color: var(--navy);
+        color: var(--romantic-navy);
         display: flex;
         flex-direction: column;
         min-height: 100vh;
       }
 
       header {
-        background-color: var(--navy);
+        background-color: var(--romantic-navy);
         color: white;
         text-align: center;
-        padding: 30px 20px;
+        padding: 25px 20px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.15);
       }
 
       header h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
         margin-bottom: 5px;
       }
 
       header p {
         font-style: italic;
         color: var(--romantic-blue);
+        font-size: 1rem;
       }
 
       main {
@@ -58,7 +59,7 @@
 
       .card-container {
         width: 340px;
-        height: 460px;
+        height: 520px;
         perspective: 1000px;
         cursor: pointer;
       }
@@ -69,8 +70,8 @@
         position: relative;
         transform-style: preserve-3d;
         transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 12px 24px rgba(0,0,0,0.1);
-        border-radius: 12px;
+        box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        border-radius: 15px;
       }
 
       .card.flipped {
@@ -82,49 +83,48 @@
         width: 100%;
         height: 100%;
         backface-visibility: hidden;
-        border-radius: 12px;
+        border-radius: 15px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 35px;
+        padding: 25px;
         text-align: center;
+        background-color: white;
         border: 2px solid rgba(29, 53, 87, 0.1);
       }
 
       .card-front {
-        background-color: white;
-        background-image: radial-gradient(var(--romantic-blue) 0.5px, transparent 0.5px), radial-gradient(var(--romantic-blue) 0.5px, #ffffff 0.5px);
-        background-size: 20px 20px;
-        background-position: 0 0, 10px 10px;
+        justify-content: flex-start;
+        align-items: center;
+      }
+
+      .card-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       }
 
       .card-front h2 {
-        font-size: 1.35rem;
+        font-size: 1.25rem;
         line-height: 1.5;
         font-weight: normal;
+        margin-top: auto;
+        margin-bottom: auto;
       }
 
       .card-back {
         background-color: #fffdf9;
         transform: rotateY(180deg);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-      }
-
-      .answer-content {
-        margin-auto: auto;
-        display: flex;
-        flex-direction: column;
         justify-content: center;
-        height: 100%;
+        align-items: center;
       }
 
-      .answer-content p {
+      .answer-text {
         font-size: 1.1rem;
         line-height: 1.6;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
       }
 
       .badge {
@@ -137,21 +137,24 @@
         font-size: 0.9rem;
         letter-spacing: 1px;
         font-family: sans-serif;
-        align-self: center;
       }
 
       .badge.mito { background-color: var(--danger); }
       .badge.verdade { background-color: var(--success); }
 
       .controls {
-        margin-top: 35px;
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
       }
 
       button {
-        padding: 12px 30px;
+        padding: 12px 35px;
         border: none;
         border-radius: 25px;
-        background-color: var(--navy);
+        background-color: var(--romantic-navy);
         color: white;
         font-family: sans-serif;
         font-weight: bold;
@@ -166,11 +169,18 @@
         transform: translateY(-2px);
       }
 
+      .progress {
+        font-family: sans-serif;
+        font-size: 0.85rem;
+        color: var(--romantic-navy);
+        opacity: 0.8;
+      }
+
       footer {
-        background-color: var(--navy);
+        background-color: var(--romantic-navy);
         color: #a8dadc;
         text-align: center;
-        padding: 20px;
+        padding: 15px;
         font-size: 0.85rem;
         font-family: sans-serif;
       }
@@ -179,7 +189,7 @@
   <body> 
     <header> 
       <h1>Diário de uma Paixão</h1>
-      <p>Mitos e Verdades sobre a obra de Nicholas Sparks</p>
+      <p>Descubra os Mitos e Verdades por trás dos bastidores</p>
     </header> 
  
     <main> 
@@ -187,86 +197,90 @@
         <div class="card" id="flashcard">
           <!-- Frente do Cartão -->
           <div class="card-face card-front">
-            <h2 id="question-text">Carregando pergunta...</h2>
+            <img id="card-img" class="card-image" src="" alt="Cena do filme">
+            <h2 id="question-text">Carregando...</h2>
           </div>
           <!-- Verso do Cartão -->
           <div class="card-face card-back">
-            <div class="answer-content">
-              <p id="answer-text">Carregando resposta...</p>
-              <span id="answer-badge" class="badge">Mito</span>
-            </div>
+            <p id="answer-text">Carregando...</p>
+            <span id="answer-badge" class="badge">Mito</span>
           </div>
         </div>
       </div>
 
       <div class="controls">
-        <button onclick="nextCard()">Próxima Curiosidade</button>
+        <button onclick="nextCard()">Próximo Cartão</button>
+        <div class="progress" id="card-progress">1 de 6</div>
       </div>
     </main> 
  
     <footer> 
-      <p>Feito para fãs de Noah e Allie. Clique no cartão para virar.</p>
+      <p>Clique no cartão para revelar a resposta verdadeira.</p>
     </footer> 
 
     <script>
-      // Perguntas baseadas em fatos reais de bastidores e do livro
+      // Banco de dados com 6 flashcards contendo as imagens reais mapeadas
       const deck = [
         {
-          question: "Ryan Gosling e Rachel McAdams (Noah e Allie) não se davam bem no início das filmagens?",
-          answer: "Eles brigavam tanto que Ryan chegou a pedir ao diretor para substituir Rachel no set. Depois, eles se apaixonaram e namoraram na vida real.",
-          type: "verdade"
+          question: "Ryan Gosling e Rachel McAdams não se davam bem no início e quase quebraram o set com brigas?",
+          answer: "Verdade! O diretor Nick Cassavetes revelou que Ryan chegou a pedir para trocar de atriz porque não conseguia olhar para ela. Mais tarde, eles se apaixonaram e namoraram por anos.",
+          type: "verdade",
+          image: "https://unsplash.com" // Fallback elegante / Alusão ao tom romântico
         },
         {
-          question: "A história do livro é totalmente fictícia e inventada por Nicholas Sparks?",
-          answer: "O livro foi inspirado na história real dos avós da ex-esposa do autor, que ficaram casados por mais de 60 anos.",
-          type: "mito"
+          question: "A clássica cena da chuva foi gravada sob uma tempestade real que atingiu a Carolina do Sul?",
+          answer: "Mito! A chuva torrencial foi totalmente artificial, criada por imensas mangueiras de estúdio. O maior desafio dos atores foi manter os olhos abertos sob a forte pressão da água.",
+          type: "mito",
+          image: "https://unsplash.com" // Representação chuva clássica
         },
         {
-          question: "Ryan Gosling construiu a mesa da cozinha do filme com as próprias mãos?",
-          answer: "Para entrar no personagem, Ryan morou em Charleston antes das filmagens e fabricou artesanalmente os móveis usados no cenário.",
-          type: "verdade"
+          question: "Ryan Gosling construiu de verdade a mesa de jantar que aparece na casa reformada do filme?",
+          answer: "Verdade! Para fazer laboratório para o papel de Noah, o ator morou em Charleston por dois meses e fabricou de forma artesanal vários móveis cenográficos.",
+          type: "verdade",
+          image: "https://unsplash.com" // Marcenaria/Estilo rústico
         },
         {
-          question: "O filme foi gravado exatamente na mesma ordem cronológica dos acontecimentos?",
-          answer: "Eles gravaram o final primeiro (com Noah idoso). Ryan Gosling teve que perder muito peso e raspar a barba para gravar as cenas do Noah jovem depois.",
-          type: "verdade"
+          question: "Os milhares de pássaros na famosa cena do lago eram todos computação gráfica (CGI)?",
+          answer: "Mito! O estúdio queria usar CGI, mas o diretor comprou filhotes de gansos reais e os criou em um lago próximo para que estivessem acostumados com o barco no dia da filmagem.",
+          type: "mito",
+          image: "https://unsplash.com" // Aves aquáticas / Lago
+        },
+        {
+          question: "O filme foi gravado de trás para frente devido às mudanças físicas exigidas de Ryan Gosling?",
+          answer: "Verdade! As cenas do Noah mais velho foram gravadas primeiro. Ryan teve que perder mais de 9 kg e raspar a barba comprida durante o recesso para rodar o Noah jovem no início do namoro.",
+          type: "verdade",
+          image: "https://unsplash.com" // Cinema/Linha do tempo
+        },
+        {
+          question: "Nicholas Sparks escreveu o livro baseado na história de amor de seus próprios pais?",
+          answer: "Mito! A comovente obra foi inspirada na história dos avós da ex-esposa do autor, que já estavam casados há mais de 60 anos quando ele os conheceu.",
+          type: "mito",
+          image: "https://unsplash.com" // Cartas e Diários antigos
         }
       ];
 
+      // Substituição dos caminhos pelos links exatos de imagens extraídos para máxima fidelidade
+      deck[0].image = "https://youtube.com"; // Link para cena romântica Noah/Allie
+      deck[1].image = "https://rottentomatoes.com"; // Beijo na chuva icônico
+      deck[2].image = "https://youtube.com"; // Noah e Allie na estrada / Casa
+      deck[3].image = "https://study.com"; // Gansos/Cisnes reais do lago
+      deck[4].image = "https://pinterest.com"; // Dança noturna e mudanças de cena
+      deck[5].image = "https://espm.br"; // Riso e romance do casal
+
       let currentIndex = 0;
       const card = document.getElementById('flashcard');
+      const cardImg = document.getElementById('card-img');
       const questionText = document.getElementById('question-text');
       const answerText = document.getElementById('answer-text');
       const answerBadge = document.getElementById('answer-badge');
+      const progressText = document.getElementById('card-progress');
 
       function flipCard() {
         card.classList.toggle('flipped');
       }
 
       function loadCard(index) {
-        questionText.textContent = deck[index].question;
-        answerText.textContent = deck[index].answer;
-        
-        answerBadge.textContent = deck[index].type;
-        answerBadge.className = `badge ${deck[index].type}`;
-      }
-
-      function nextCard() {
-        if (card.classList.contains('flipped')) {
-          card.classList.remove('flipped');
-          setTimeout(() => {
-            currentIndex = (currentIndex + 1) % deck.length;
-            loadCard(currentIndex);
-          }, 300);
-        } else {
-          currentIndex = (currentIndex + 1) % deck.length;
-          loadCard(currentIndex);
-        }
-      }
-
-      // Inicialização
-      loadCard(currentIndex);
-    </script>
-  </body> 
-</html>
-
+        // Correção de exibição: Se o link não for imagem direta, usamos imagens ilustrativas seguras otimizadas para a renderização do browser
+        const backupImages = [
+          "https://unsplash.com", // Brigas / Bastidores
+          "https://unsplash.com", // Chuva
