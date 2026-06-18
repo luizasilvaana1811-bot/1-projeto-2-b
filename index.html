@@ -3,294 +3,247 @@
   <head> 
     <meta charset="UTF-8" /> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-    <title>Flashcards de Mitos e Verdades - Makeup Gringa</title> 
+    <title>Flashcards de Mitos e Verdades - Maquiagem Gringa</title> 
     <style>
       :root {
-        --coquette-pink: #ffb7b2;
-        --soft-rose: #ffdac1;
-        --bale-pink: #fff0f5;
-        --luxury-gold: #d4af37;
-        --dark-rose: #6b4247;
-        --success: #b5e2b9;
-        --danger: #ffb3ba;
-      }
-
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
+        --cor-fundo: #fff5f5;
+        --cor-primaria: #ffb7b2;
+        --cor-secundaria: #ffdac1;
+        --cor-texto: #4a3b32;
+        --cor-card-frente: #ffffff;
+        --cor-card-verso: #ffe5ec;
+        --cor-detalhe: #d4af37;
       }
 
       body {
-        font-family: 'Playfair Display', 'Georgia', serif;
-        background-color: var(--bale-pink);
-        color: var(--dark-rose);
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--cor-fundo);
+        color: var(--cor-texto);
         display: flex;
         flex-direction: column;
         min-height: 100vh;
+        align-items: center;
       }
 
       header {
-        background: linear-gradient(135deg, #ffe5ec, #ffc2d1);
         text-align: center;
-        padding: 40px 20px;
-        box-shadow: 0 4px 15px rgba(224, 122, 146, 0.2);
-        border-bottom: 2px dashed #ffb7b2;
+        padding: 20px;
+        background-color: var(--cor-primaria);
+        width: 100%;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
       }
 
       header h1 {
-        font-size: 2.2rem;
-        color: var(--dark-rose);
-        margin-bottom: 8px;
-        letter-spacing: 1px;
+        margin: 0;
+        font-size: 1.8rem;
+        color: #fff;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
       }
 
       header p {
-        font-style: italic;
-        color: #9c666c;
-        font-size: 1.1rem;
+        margin: 5px 0 0 0;
+        font-size: 1rem;
+        color: #fff;
+        opacity: 0.9;
       }
 
       main {
         flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
         padding: 40px 20px;
+        width: 100%;
+        max-width: 1200px;
+        box-sizing: border-box;
+        justify-content: center;
       }
 
-      /* Container Flexbox para alinhar os cartões um ao lado do outro */
-      .deck-container {
-        display: flex;
-        gap: 20px;
-        overflow-x: auto;
-        padding: 20px 10px;
-        max-width: 100%;
-        scroll-behavior: smooth;
-        scrollbar-width: thin;
-      }
-
-      /* Customização da barra de rolagem */
-      .deck-container::-webkit-scrollbar {
-        height: 8px;
-      }
-      .deck-container::-webkit-scrollbar-thumb {
-        background-color: var(--coquette-pink);
-        border-radius: 10px;
-      }
-
-      .card-container {
-        width: 280px;
-        height: 440px;
+      /* Estrutura do Flashcard */
+      .flashcard-container {
+        background-color: transparent;
+        height: 300px;
         perspective: 1000px;
         cursor: pointer;
-        flex-shrink: 0; /* Impede que os cartões esmaguem */
       }
 
-      .card {
+      .flashcard {
+        position: relative;
         width: 100%;
         height: 100%;
-        position: relative;
+        text-align: center;
+        transition: transform 0.6s;
         transform-style: preserve-3d;
-        transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        box-shadow: 0 8px 20px rgba(224, 122, 146, 0.15);
-        border-radius: 20px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+        border-radius: 15px;
       }
 
-      .card.flipped {
+      /* Classe aplicada via JavaScript para virar o card */
+      .flashcard.virado {
         transform: rotateY(180deg);
       }
 
-      .card-face {
+      .face {
         position: absolute;
         width: 100%;
         height: 100%;
+        -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
-        border-radius: 20px;
         display: flex;
         flex-direction: column;
-        padding: 20px;
-        text-align: center;
-        background-color: white;
-        border: 2px solid #ffe5ec;
-      }
-
-      .card-front {
-        justify-content: flex-start;
-        align-items: center;
-        background: linear-gradient(to bottom, #ffffff, #fff5f7);
-      }
-
-      .card-image {
-        width: 100%;
-        height: 180px;
-        object-fit: cover;
-        border-radius: 15px;
-        margin-bottom: 15px;
-        border: 1px solid #ffe5ec;
-      }
-
-      .card-front h2 {
-        font-size: 1.1rem;
-        line-height: 1.5;
-        font-weight: 600;
-        color: var(--dark-rose);
-        margin-top: auto;
-        margin-bottom: auto;
-      }
-
-      .card-back {
-        background-color: #fffafb;
-        transform: rotateY(180deg);
         justify-content: center;
         align-items: center;
-        border: 2px solid var(--coquette-pink);
+        padding: 20px;
+        box-sizing: border-box;
+        border-radius: 15px;
+        border: 2px solid var(--cor-secundaria);
       }
 
-      .answer-text {
-        font-size: 1rem;
-        line-height: 1.6;
-        margin-bottom: 20px;
-        color: #52363a;
+      .frente {
+        background-color: var(--cor-card-frente);
+        color: var(--cor-texto);
       }
 
-      .badge {
-        display: inline-block;
-        padding: 6px 20px;
-        border-radius: 20px;
-        color: var(--dark-rose);
+      .frente .marca {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #b5838d;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .frente h2 {
+        font-size: 1.3rem;
+        margin: 0 0 15px 0;
+      }
+
+      .frente .instrucao {
+        font-size: 0.75rem;
+        color: #a2a2a2;
+        position: absolute;
+        bottom: 15px;
+      }
+
+      .verso {
+        background-color: var(--cor-card-verso);
+        color: var(--cor-texto);
+        transform: rotateY(180deg);
+      }
+
+      .verso .status {
+        font-size: 1.5rem;
         font-weight: bold;
         text-transform: uppercase;
-        font-size: 0.8rem;
+        margin-bottom: 10px;
         letter-spacing: 1px;
-        font-family: sans-serif;
       }
 
-      .badge.mito { 
-        background-color: var(--danger); 
-        box-shadow: 0 4px 10px rgba(255, 179, 186, 0.5);
-      }
-      .badge.verdade { 
-        background-color: var(--success); 
-        box-shadow: 0 4px 10px rgba(181, 226, 185, 0.5);
+      .verso .status.verdade {
+        color: #2a9d8f;
       }
 
-      .tip {
-        text-align: center;
-        font-size: 0.9rem;
-        color: #9c666c;
-        margin-top: -10px;
-        margin-bottom: 20px;
-        font-style: italic;
+      .verso .status.mito {
+        color: #e76f51;
+      }
+
+      .verso p {
+        font-size: 1rem;
+        line-height: 1.5;
+        margin: 0;
       }
 
       footer {
-        background-color: #ffc2d1;
-        color: var(--dark-rose);
+        background-color: var(--cor-texto);
+        color: #fff;
         text-align: center;
-        padding: 20px;
-        font-size: 0.9rem;
-        font-weight: bold;
-        border-top: 2px dashed #ffb7b2;
+        padding: 15px;
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 0.85rem;
       }
     </style>
   </head> 
   <body> 
     <header> 
       <h1>Mitos e Verdades da Maquiagem Gringa</h1>
-      <p>O universo das marcas virais mais desejadas da Sephora</p>
+      <p>Clique nos cards para revelar o segredo por trás dos produtos mais famosos!</p>
     </header> 
  
-    <main style="flex-direction: column;"> 
-      <p class="tip">Arraste para o lado para ver todos os cartões 🎀</p>
-      
-      <div class="deck-container">
-        
-        <!-- CARD 1 - RARE BEAUTY -->
-        <div class="card-container" onclick="flipCard(this)">
-          <div class="card">
-            <div class="card-face card-front">
-              <img class="card-image" src="https://unsplash.com" alt="Rare Beauty Blush">
-              <h2>O blush líquido da Rare Beauty foi feito super pigmentado por um erro de fábrica?</h2>
-            </div>
-            <div class="card-face card-back">
-              <p class="answer-text">Mito! A altíssima pigmentação foi proposital. Selena Gomez queria uma fórmula inclusiva que aparecesse perfeitamente em todos os tons de pele com apenas uma gota.</p>
-              <span class="badge mito">Mito</span>
-            </div>
+    <main> 
+      <!-- Card 1: Rare Beauty -->
+      <div class="flashcard-container" onclick="virarCard(this)">
+        <div class="flashcard">
+          <div class="face frente">
+            <span class="marca">Rare Beauty</span>
+            <h2>O Blush Líquido Soft Pinch rende mais de um ano usando quase todo dia?</h2>
+            <span class="instrucao">Clique para descobrir</span>
+          </div>
+          <div class="face verso">
+            <span class="status verdade">Verdade!</span>
+            <p>Esse blush possui uma pigmentação extremamente alta. Apenas uma gotinha minúscula (um pontinho) é suficiente para as duas bochechas. Se exagerar, ele mancha!</p>
           </div>
         </div>
+      </div>
 
-        <!-- CARD 2 - DIOR -->
-        <div class="card-container" onclick="flipCard(this)">
-          <div class="card">
-            <div class="card-face card-front">
-              <img class="card-image" src="https://unsplash.com" alt="Dior Lip Oil">
-              <h2>O famoso Lip Glow Oil da Dior reage com o pH dos lábios para mudar de cor?</h2>
-            </div>
-            <div class="card-face card-back">
-              <p class="answer-text">Verdade! Ele possui a tecnologia "Color Reviver", que reage diretamente com a umidade e o nível de pH da sua boca para criar um tom rosado exclusivo e personalizado.</p>
-              <span class="badge verdade">Verdade</span>
-            </div>
+      <!-- Card 2: Fenty Beauty -->
+      <div class="flashcard-container" onclick="virarCard(this)">
+        <div class="flashcard">
+          <div class="face frente">
+            <span class="marca">Fenty Beauty</span>
+            <h2>A base Pro Filt'r da Rihanna foi feita exclusivamente para peles bem retintas?</h2>
+            <span class="instrucao">Clique para descobrir</span>
+          </div>
+          <div class="face verso">
+            <span class="status mito">Mito!</span>
+            <p>A Fenty Beauty revolucionou o mercado por ser inclusiva para todos. O foco inicial foi trazer tons profundos que faltavam no mercado, mas a linha atende mais de 50 tons de pele, das mais claras às mais retintas.</p>
           </div>
         </div>
+      </div>
 
-        <!-- CARD 3 - SOL DE JANEIRO -->
-        <div class="card-container" onclick="flipCard(this)">
-          <div class="card">
-            <div class="card-face card-front">
-              <img class="card-image" src="https://unsplash.com" alt="Sol de Janeiro Cream">
-              <h2>A marca gringa super viral 'Sol de Janeiro' é originalmente fabricada no Brasil?</h2>
-            </div>
-            <div class="card-face card-back">
-              <p class="answer-text">Mito! Apesar de celebrar a estética e os ingredientes das praias brasileiras, a marca foi fundada nos Estados Unidos por uma americana e os produtos são desenvolvidos lá fora.</p>
-              <span class="badge mito">Mito</span>
-            </div>
+      <!-- Card 3: Charlotte Tilbury -->
+      <div class="flashcard-container" onclick="virarCard(this)">
+        <div class="flashcard">
+          <div class="face frente">
+            <span class="marca">Charlotte Tilbury</span>
+            <h2>O pó Flawless Finish serve apenas para matificar e tira todo o viço natural?</h2>
+            <span class="instrucao">Clique para descobrir</span>
+          </div>
+          <div class="face verso">
+            <span class="status mito">Mito!</span>
+            <p>Ele é famoso justamente por ser ultra-fino e criar um efeito de "filtro de desfoque" (blur) sem pesar. Ele sela a maquiagem mas mantém uma textura acetinada, sem aspecto seco de pó tradicional.</p>
           </div>
         </div>
+      </div>
 
-        <!-- CARD 4 - CHARLOTTE TILBURY -->
-        <div class="card-container" onclick="flipCard(this)">
-          <div class="card">
-            <div class="card-face card-front">
-              <img class="card-image" src="https://unsplash.com" alt="Hollywood Flawless Filter">
-              <h2>O Hollywood Flawless Filter da Charlotte Tilbury é uma base de alta cobertura?</h2>
-            </div>
-            <div class="card-face card-back">
-              <p class="answer-text">Mito! Ele não é uma base. Trata-se de um primer iluminador multifuncional híbrido, feito para dar viço de "filtro do Instagram" por baixo da maquiagem ou nos pontos altos do rosto.</p>
-              <span class="badge mito">Mito</span>
-            </div>
+      <!-- Card 4: Sol de Janeiro -->
+      <div class="flashcard-container" onclick="virarCard(this)">
+        <div class="flashcard">
+          <div class="face frente">
+            <span class="marca">Sol de Janeiro</span>
+            <h2>O famoso creme Bum Bum Cream elimina a celulite por completo?</h2>
+            <span class="instrucao">Clique para descobrir</span>
+          </div>
+          <div class="face verso">
+            <span class="status mito">Mito!</span>
+            <p>Nenhum creme elimina celulite sozinho. O extrato de Guaraná presente nele ajuda a estimular a circulação local e dá firmeza temporária à pele (efeito visual de pele mais lisa), além de uma hidratação potente.</p>
           </div>
         </div>
-
-        <!-- CARD 5 - RHODE -->
-        <div class="card-container" onclick="flipCard(this)">
-          <div class="card">
-            <div class="card-face card-front">
-              <img class="card-image" src="https://unsplash.com" alt="Rhode Peptide Lip Treatment">
-              <h2>O protetor labial de peptídeos da Rhode, marca da Hailey Bieber, esgota em minutos?</h2>
-            </div>
-            <div class="card-face card-back">
-              <p class="answer-text">Verdade! Devido ao estrondoso sucesso e estratégias de marketing focadas no visual 'glazed skin' da Hailey, os estoques esgotam rapidamente e geram filas de espera imensas mundiais.</p>
-              <span class="badge verdade">Verdade</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- CARD 6 - GLOSSIER -->
-        <div class="card-container" onclick="flipCard(this)">
-          <div class="card">
-            <div class="card-face card-front">
-              <img class="card-image" src="https://unsplash.com" alt="Glossier Aesthetic">
-              <h2>A Glossier foi uma das marcas pioneiras a focar no conceito de 'maquiagem sem maquiagem'?</h2>
-            </div>
-            <div class="card-face card-back">
-              <p class="answer-text">Verdade! Lançada com o lema "Skin first, makeup second", a marca revolucionou a maquiagem gringa ao priorizar a pele natural e iluminada antes da explosão do visual Clean Girl.</p>
-              <span class="badge verdade">Verdade</span>
-            </div>
-          </div>
-        </div>
-
       </div>
     </main> 
  
     <footer> 
+      <p>&copy; 2026 - Quiz Interativo de Beleza</p>
+    </footer> 
+
+    <script>
+      function virarCard(container) {
+        // Encontra o elemento .flashcard dentro do container que recebeu o clique
+        const card = container.querySelector('.flashcard');
+        // Alterna a classe 'virado' para aplicar a animação CSS
+        card.classList.toggle('virado');
+      }
+    </script>
+  </body> 
+</html>
